@@ -14,6 +14,7 @@ data = pd.concat([data1, data2, data3])
 @app.get('/')
 def read_root():
     """return home page"""
+    
     string = """
         <html>
             <body>
@@ -33,7 +34,7 @@ def read_root():
         </html>
     """
     
-    return string()
+    return string
 
 @app.get('/location')
 def show_lokasi():
