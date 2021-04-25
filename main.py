@@ -13,7 +13,7 @@ data = pd.concat([data1, data2, data3])
 
 @app.get('/')
 def read_root():
-    return {'data': data.to_dict()}
+    return data.to_dict()
 
 @app.get('/location')
 def show_lokasi():
@@ -30,10 +30,9 @@ def show_lokasi():
             }    
         loc_dict[i[0]] = tmp_dict
 
-    #return json.dumps(loc_dict)
     return loc_dict
         
-@app.get('/year')
+@app.get('./year')
 def show_year():
     df2 = data.groupby(['tahun']).sum()
     df2 = df2.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
@@ -48,8 +47,8 @@ def show_year():
 
     return year_dict
 
-@app.get('/loc-growth')
-def show_growth_per_loc():
+@app.get('./year-growth')
+def show_growth_per_year():
     df3 = data.groupby(['tahun']).sum()
     df3['jumlah_judul_growth_percent'] = round(df3['jumlah_judul'].pct_change()*1e2, 2)
     df3['jumlah_eksemplar_growth_percent'] = round(df3['jumlah_eksemplar'].pct_change()*1e2, 2)
@@ -65,8 +64,8 @@ def show_growth_per_loc():
 
     return year_growth_dict
     
-@app.get('/year-growth')
-def show_total_growth_per_year():
+@app.get('./location-growth')
+def show_location_growth_per_year():
     df4 = data.groupby(['lokasi', 'tahun']).sum()
 
     df4['jumlah_judul_growth_percent'] = round(df4.groupby('lokasi')['jumlah_judul'].pct_change()*1e2, 2)
