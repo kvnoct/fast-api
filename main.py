@@ -20,7 +20,7 @@ def read_root():
         <html>
             <body>
                 <h1>
-                    Selamat datang di data perpustakaan wilaya Jakarta!
+                    Selamat datang di data perpustakaan wilayah Jakarta!
                 </h1>
                 <h2>
                     Data-data yang dapat diperoleh:
