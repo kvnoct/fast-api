@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -34,7 +35,7 @@ def read_root():
         </html>
     """
     
-    return string
+    return HTMLResponse(content=string, status_code=200)
 
 @app.get('/location')
 def show_lokasi():
