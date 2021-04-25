@@ -13,10 +13,14 @@ data = pd.concat([data1, data2, data3])
 
 @app.get('/')
 def read_root():
+    """return all library data"""
+    
     return data.to_dict()
 
 @app.get('/location')
 def show_lokasi():
+    """return aggregated total books on each library location per year"""
+    
     df = data.groupby(['lokasi', 'tahun']).sum()
     df = df.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
 
@@ -31,9 +35,30 @@ def show_lokasi():
         loc_dict[i[0]] = tmp_dict
 
     return loc_dict
+
+@app.get('/location-total')
+def show_location_total():
+    """return aggregated total books on each library location"""
+    
+    df = data.groupby(['lokasi']).sum()
+    df.drop(columns = ['tahun'], inplace = True)
+    df = df.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
+
+    loc_dict = {}
+
+    for i,j in df.iterrows():   
+        loc_dict[i] = {
+            j.index[0]: j[0],
+            j.index[1]: j[1]
+        }
+
+    return loc_dict
         
+
 @app.get('/year')
 def show_year():
+    """return aggregated total books each year in all library location"""
+    
     df2 = data.groupby(['tahun']).sum()
     df2 = df2.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
 
@@ -49,6 +74,8 @@ def show_year():
 
 @app.get('/year-growth')
 def show_growth_per_year():
+    """return annual total books growth in all library location"""
+    
     df3 = data.groupby(['tahun']).sum()
     df3['jumlah_judul_growth_percent'] = round(df3['jumlah_judul'].pct_change()*1e2, 2)
     df3['jumlah_eksemplar_growth_percent'] = round(df3['jumlah_eksemplar'].pct_change()*1e2, 2)
@@ -66,6 +93,8 @@ def show_growth_per_year():
     
 @app.get('/location-growth')
 def show_location_growth_per_year():
+    """return annual total books growth on each library location"""
+    
     df4 = data.groupby(['lokasi', 'tahun']).sum()
 
     df4['jumlah_judul_growth_percent'] = round(df4.groupby('lokasi')['jumlah_judul'].pct_change()*1e2, 2)
