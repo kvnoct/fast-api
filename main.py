@@ -36,25 +36,6 @@ def show_lokasi():
 
     return loc_dict
 
-@app.get('/location-total')
-def show_location_total():
-    """return aggregated total books on each library location"""
-    
-    df = data.groupby(['lokasi']).sum()
-    df.drop(columns = ['tahun'], inplace = True)
-    df = df.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
-
-    loc_dict = {}
-
-    for i,j in df.iterrows():   
-        loc_dict[i] = {
-            j.index[0]: j[0],
-            j.index[1]: j[1]
-        }
-
-    return loc_dict
-        
-
 @app.get('/year')
 def show_year():
     """return aggregated total books each year in all library location"""
