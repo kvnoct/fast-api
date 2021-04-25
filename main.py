@@ -32,7 +32,7 @@ def show_lokasi():
 
     return loc_dict
         
-@app.get('./year')
+@app.get('/year')
 def show_year():
     df2 = data.groupby(['tahun']).sum()
     df2 = df2.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
@@ -47,7 +47,7 @@ def show_year():
 
     return year_dict
 
-@app.get('./year-growth')
+@app.get('/year-growth')
 def show_growth_per_year():
     df3 = data.groupby(['tahun']).sum()
     df3['jumlah_judul_growth_percent'] = round(df3['jumlah_judul'].pct_change()*1e2, 2)
@@ -64,7 +64,7 @@ def show_growth_per_year():
 
     return year_growth_dict
     
-@app.get('./location-growth')
+@app.get('/location-growth')
 def show_location_growth_per_year():
     df4 = data.groupby(['lokasi', 'tahun']).sum()
 
