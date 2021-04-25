@@ -13,9 +13,27 @@ data = pd.concat([data1, data2, data3])
 
 @app.get('/')
 def read_root():
-    """return all library data"""
+    """return home page"""
+    string = """
+        <html>
+            <body>
+                <h1>
+                    Selamat datang di data perpustakaan wilaya Jakarta!
+                </h1>
+                <h2>
+                    Data-data yang dapat diperoleh:
+                </h2>
+                <ul>
+                        <li><b>/location/</b> : data jumlah buku di setiap perpustakaan tiap tahunnya</li>
+                        <li><b>/year/</b> : data total jumlah buku di semua lokasi tiap tahunnya</li>
+                        <li><b>/location-growth/</b> : pertumbuhan jumlah buku di setiap lokasi tiap tahunnya</li>
+                        <li><b>/year-growth/</b> : pertumbuhan jumlah buku total di semua lokasi tiap tahunnya</li>
+                </ul>
+            </body>
+        </html>
+    """
     
-    return data.to_dict()
+    return string()
 
 @app.get('/location')
 def show_lokasi():
