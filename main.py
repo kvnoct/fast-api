@@ -13,7 +13,7 @@ data = pd.concat([data1, data2, data3])
 
 @app.get('/')
 def read_root():
-    return {'data': data.to_string()}
+    return {'data': data.to_dict()}
 
 @app.get('/location')
 def show_lokasi():
@@ -46,7 +46,7 @@ def show_year():
             j.index[1]: j[1]
         }
 
-    return json.dumps(year_dict)
+    return year_dict
 
 @app.get('/loc-growth')
 def show_growth_per_loc():
@@ -63,7 +63,7 @@ def show_growth_per_loc():
             j.index[1]: j[1]
         }
 
-    return json.dumps(year_growth_dict)
+    return year_growth_dict
     
 @app.get('/year-growth')
 def show_total_growth_per_year():
@@ -84,4 +84,4 @@ def show_total_growth_per_year():
             }    
         loc_dict2[i[0]] = tmp_dict2
 
-    return json.dumps(loc_dict2)
+    return loc_dict2
