@@ -73,22 +73,6 @@ def show_year():
     
     return year_dict
 
-@app.get('/year-json')
-def show_json_year():
-    """return aggregated total books each year in all library location"""
-    
-    df2 = data.groupby(['tahun']).sum()
-    df2 = df2.astype({"jumlah_judul": object, "jumlah_eksemplar": object})
-
-    year_dict = {}
-
-    for i, j in df2.iterrows():
-        year_dict[i] = {
-            j.index[0]: j[0],
-            j.index[1]: j[1]
-        }
-    
-    return json.dumps(year_dict)
 
 @app.get('/year-growth')
 def show_growth_per_year():
