@@ -107,11 +107,20 @@ def show_location_growth_per_year():
     loc_dict2 = {}
     tmp_dict2 = {}
 
-    for i,j in df4.iterrows():   
+    it = 0
+    prev = 0 
+    for i,j in df4.iterrows():    
         tmp_dict2[str(i[1])] = { 
                 j.index[0]: j[0],
                 j.index[1]: j[1]
             }    
-        loc_dict2[i[0]] = tmp_dict2
+
+        if(int(i[1]) < prev or it == len(df4)-1):
+            loc_dict2[prev_key] = tmp_dict2
+            tmp_dict2 = {}
+
+        prev = int(i[1])
+        prev_key = i[0]
+        it += 1
 
     return loc_dict2
